@@ -33,14 +33,46 @@ body{
     display: flex;
     align-items: center;
     justify-content: space-around;
+    margin-top: 15px;
 }
 .hr-tag{
     border: 1px dashed #8B4513;
 }
-.text{
-    color: gray;
-}
+
 .node-text{
     color:#8B4513 ;
 }
-
+.button-style-show{
+    width: 30px;
+    height: 30px;
+    font-size: 15px;
+    color: #fff;
+    background-color: #8B4513;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    border: none;
+    margin: 0 5px;
+}
+.information{
+    font-size: 13px;
+    color: gray;
+    margin: 0 10px ;
+}
+/* .edit{
+    ma
+} */
+.button-edit{
+    background-color: #8B4513;
+    color: #fff;
+}
+.button-edit:hover{
+    background-color: #52290c !important; 
+    color: #fff !important;
+}
+.edit{
+    margin: auto;
+    margin-top: 10px;
+}

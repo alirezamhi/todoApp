@@ -5,12 +5,29 @@ const App = () => {
   const [initialItem, setInitialItem] = useState([]);
   const [isEdit, setIsEdit] = useState("");
   const [inputEdit, setInputEdit] = useState(inputAdd);
+  const [$date, $setDate] = useState(new window.Date());
+  let day = $date.getDate();
+  let month = $date.getMonth();
+  let year = $date.getFullYear();
+  let min = $date.getMinutes();
+  let sec = $date.getSeconds();
+  let hour = $date.getHours();
+  const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  let week = days[$date.getDay()];
+
   function addHandler() {
     inputAdd &&
       setInitialItem([
         ...initialItem,
-        { text: inputAdd, id: initialItem.length + 1, done: false },
+        {
+          text: inputAdd,
+          id: initialItem.length + 1,
+          done: false,
+          date: `${week} ${month} ${day} ${year} ${hour}:${min}:${sec}`,
+        },
       ]);
+    console.log($date);
+    $setDate(new window.Date());
     setInputAdd("");
   }
   function deletHnandler(index) {
@@ -44,12 +61,8 @@ const App = () => {
           onChange={(e) => setInputAdd(e.target.value)}
           className="form-control"
         />
-        <button
-          onClick={addHandler}
-          type="button"
-          className="btn button-style"
-        >
-          <i class="bi bi-plus-square-dotted"></i>
+        <button onClick={addHandler} type="button" className="btn button-style">
+          <i className="bi bi-plus-square-dotted"></i>
         </button>
       </div>
       <div>
@@ -57,38 +70,57 @@ const App = () => {
           return (
             <div key={index} className="item-box m-3">
               {isEdit !== node.id ? (
-                <div className="show-item m-3">
+                <div className="show-item">
                   {node.done ? (
                     <div>
-                      <span className="text">text : </span>
-                      <s onClick={() => doneHandler(node.id)} className="node-text">{node.text}</s>
+                      <span className="text-muted">text : </span>
+                      <s className="node-text">{node.text}</s>
                     </div>
                   ) : (
                     <div>
-                      <span className="text">text : </span>
-                      <span onClick={() => doneHandler(node.id)}
-                      className="node-text"
-                      >
-                        {node.text}
-                      </span>
+                      <span className="text-muted">text : </span>
+                      <span className="node-text">{node.text}</span>
                     </div>
                   )}
                   <div>
-                    <button onClick={() => {deletHnandler(node.id);}} className=""><i class="bi bi-trash3"></i></button> 
-                    <button onClick={() => editHandler(node.id)} className=""><i class="bi bi-pen"></i></button>
+                    <button
+                      onClick={() => deletHnandler(node.id)}
+                      className="button-style-show"
+                    >
+                      <i className="bi bi-trash3"></i>
+                    </button>
+                    <button
+                      onClick={() => editHandler(node.id)}
+                      className="button-style-show"
+                    >
+                      <i className="bi bi-pen"></i>
+                    </button>
+                    <button
+                      onClick={() => doneHandler(node.id)}
+                      className="button-style-show"
+                    >
+                      <i className="bi bi-check2"></i>
+                    </button>
                   </div>
                 </div>
               ) : (
-                <div>
+                <div className="input-group w-75 edit">
                   <input
                     value={inputEdit}
                     onChange={(e) => setInputEdit(e.target.value)}
+                    className="form-control"
                   />
-                  <button onClick={() => saveHandler(node.id)}>save</button>
-                  <button onClick={cancelHandler}>cacel</button>
+                  <button onClick={() => saveHandler(node.id)} className="btn button-edit" type="button"><i className="bi bi-save"></i></button>
+                  <button onClick={cancelHandler} className="btn button-edit" type="button"><i className="bi bi-x-circle"></i></button>
                 </div>
               )}
-              <hr className="hr-tag"/>
+              <hr className="hr-tag" />
+              <div className="information">
+                <p>done: {node.done ? "True" : "False"}</p>
+                <p>
+                  date:{node.date}
+                </p>
+              </div>
             </div>
           );
         })}
